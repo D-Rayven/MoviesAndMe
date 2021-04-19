@@ -1,27 +1,24 @@
 import React from 'react'
-import { StyleSheet, View, Text } from 'react-native'
+import { StyleSheet, View, Text, Image } from 'react-native'
+import { getImageFromApi } from '../API/TMDBApi'
 
 class FilmItem extends React.Component {
     render() {
+        const film = this.props.film
         return (
             <View style={ styles.main_container }>
-                <View style={ styles.image }>
+                <Image style={ styles.image } source={{ uri: getImageFromApi(film.poster_path) }}/>
 
-                </View>
                 <View style={ styles.content }>
                     <View style={ styles.header }>
-                        <View style={ styles.title_text }>
-                            <Text>Titre du film</Text>
-                        </View>
-                        <View style={ styles.vote }>
-                            <Text>Vote</Text>
-                        </View>
+                            <Text style={ styles.title_text }>{ film.title }</Text>
+                            <Text style={ styles.vote_text }>{ film.vote_average }</Text>
                     </View>
-                    <View style={ styles.description }>
-                        <Text>Description</Text>
+                    <View style={ styles.description_container }>
+                        <Text style={ styles.description_text } numberOfLines={ 6 }>{ film.overview }</Text>
                     </View>
-                    <View style={ styles.date }>
-                        <Text>Sorti le 00/00/0000</Text>
+                    <View style={ styles.date_container }>
+                        <Text style={ styles.date_text }>Sorti le { film.release_date }</Text>
                     </View>
                 </View>
             </View>
@@ -35,33 +32,43 @@ const styles = StyleSheet.create({
         flexDirection: 'row'
     },
     image: {
-        flex: 1,
-        backgroundColor: 'gray',
+        width: 120,
+        height: 180,
+        margin: 5,
     },
     content: {
         flex: 1,
-        flexDirection: 'column'
+        margin: 5
     },
     header: {
-        flex: 1,
-        flexDirection: 'row',
-        backgroundColor: 'orange',
-        justifyContent: 'space-between'
+        flex: 3,
+        flexDirection: 'row'
     },
     title_text: {
-
-    },
-    vote: {
-
-    },
-    description: {
-        flex: 3,
-        backgroundColor: 'red'
-    },
-    date: {
+        fontWeight: 'bold',
+        fontSize: 16,
         flex: 1,
-        backgroundColor: 'purple',
-        textAlign: 'center'
+        flexWrap: 'wrap',
+        paddingRight: 5
+    },
+    vote_text: {
+        fontWeight: 'bold',
+        fontSize: 26,
+        color: '#666666'
+    },
+    description_container: {
+        flex: 7,
+    },
+    description_text: {
+        fontStyle: 'italic',
+        color: '#666666'
+    },
+    date_container: {
+        flex: 1,
+    },
+    date_text: {
+        textAlign: 'right',
+        fontSize: 14
     }
 
 })
