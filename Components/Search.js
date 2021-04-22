@@ -1,9 +1,10 @@
 // Components/Search.js
 
 import React from 'react'
-import { StyleSheet, View, TextInput, Button, Text, FlatList, ActivityIndicator } from 'react-native'
+import { StyleSheet, View, TextInput, Button, Text, FlatList, ActivityIndicator, TouchableOpacity } from 'react-native'
 import FilmItem from './FilmItem'
 import { getFilmsFromApiWithSearchedText } from '../API/TMDBApi'
+import { useNavigation } from '@react-navigation/native';
 
 class Search extends React.Component {
 
@@ -33,7 +34,7 @@ class Search extends React.Component {
   }
 
   _searchTextInputChanged(text) {
-    this.searchedText = text 
+    this.searchedText = text
   }
 
   _searchFilms() {
@@ -57,6 +58,9 @@ class Search extends React.Component {
   }
 
   render() {
+
+    const navigation = useNavigation()
+
     return (
       <View style={styles.main_container}>
         <TextInput
@@ -77,6 +81,11 @@ class Search extends React.Component {
               }
           }}
         />
+
+        <TouchableOpacity activeOpacity={ 0.7 }
+          onPress={ () => this.props.navigation.push("Detail") }>
+            <Text>Detail</Text>
+          </TouchableOpacity>
         {this._displayLoading()}
       </View>
     )
@@ -86,7 +95,7 @@ class Search extends React.Component {
 const styles = StyleSheet.create({
   main_container: {
     flex: 1,
-    marginTop: 20
+    marginTop: 50
   },
   textinput: {
     marginLeft: 5,
